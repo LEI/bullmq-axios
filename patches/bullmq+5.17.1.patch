@@ -1,0 +1,17 @@
+diff --git a/node_modules/bullmq/dist/cjs/utils.js b/node_modules/bullmq/dist/cjs/utils.js
+index 0d08634..6596785 100644
+--- a/node_modules/bullmq/dist/cjs/utils.js
++++ b/node_modules/bullmq/dist/cjs/utils.js
+@@ -166,11 +166,7 @@ const parseObjectValues = (obj) => {
+ };
+ exports.parseObjectValues = parseObjectValues;
+ const errorToJSON = (value) => {
+-    const error = {};
+-    Object.getOwnPropertyNames(value).forEach(function (propName) {
+-        error[propName] = value[propName];
+-    });
+-    return error;
++    return JSON.parse(JSON.stringify(value));
+ };
+ exports.errorToJSON = errorToJSON;
+ const INFINITY = 1 / 0;
