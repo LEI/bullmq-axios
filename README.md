@@ -1,4 +1,4 @@
-# bullmq-axios
+# bullmq-sandbox
 
 Install and start redis:
 
@@ -15,21 +15,20 @@ npm start false
 ```
 
 > ```
-> Sandboxed job 500
+> Sandboxed job {}
 > Worker failed TypeError: Converting circular structure to JSON
->     --> starting at object with constructor 'ClientRequest'
->     |     property 'res' -> object with constructor 'IncomingMessage'
->     --- property 'req' closes the circle
+>     --> starting at object with constructor 'Object'
+>     --- property 'ref' closes the circle
 >     at stringify (<anonymous>)
 >     at writeChannelMessage (node:internal/child_process/serialization:159:20)
->     at target._send (node:internal/child_process:852:17)
->     at target.send (node:internal/child_process:752:19)
->     at ./bullmq-axios/node_modules/bullmq/dist/cjs/utils.js:135:18
+>     at target._send (node:internal/child_process:851:17)
+>     at target.send (node:internal/child_process:751:19)
+>     at ./node_modules/bullmq/dist/cjs/utils.js:134:18
 >     at new Promise (<anonymous>)
->     at asyncSend (./bullmq-axios/node_modules/bullmq/dist/cjs/utils.js:133:12)
->     at childSend (./bullmq-axios/node_modules/bullmq/dist/cjs/utils.js:153:56)
->     at ChildProcessor.send (./bullmq-axios/node_modules/bullmq/dist/cjs/classes/main.js:9:57)
->     at ./bullmq-axios/node_modules/bullmq/dist/cjs/classes/child-processor.js:77:28
+>     at asyncSend (./node_modules/bullmq/dist/cjs/utils.js:132:12)
+>     at childSend (./node_modules/bullmq/dist/cjs/utils.js:152:56)
+>     at ChildProcessor.send (./node_modules/bullmq/dist/cjs/classes/main.js:9:57)
+>     at ./node_modules/bullmq/dist/cjs/classes/child-processor.js:77:28
 > ```
 
 Run with worker threads:
@@ -39,14 +38,17 @@ npm start true
 ```
 
 > ```
-> Sandboxed job 500
-> Worker failed DataCloneError: function transformRequest(data, headers) {
->     const contentType = headers.getContentType() || '';
->     const ha...<omitted>... } could not be cloned.
->     at new DOMException (node:internal/per_context/domexception:53:5)
->     at ChildProcessor.send (./bullmq-axios/node_modules/bullmq/dist/cjs/classes/main-worker.js:9:69)
->     at ./bullmq-axios/node_modules/bullmq/dist/cjs/classes/child-processor.js:77:28
->     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+> Sandboxed job {}
+> Worker failed Error: test
+>     at module.exports (./sandbox.js:3:17)
+>     at ChildProcessor.processor (./node_modules/bullmq/dist/cjs/classes/child-processor.js:47:40)
+>     at ./node_modules/bullmq/dist/cjs/classes/child-processor.js:70:43
+>     at ChildProcessor.start (./node_modules/bullmq/dist/cjs/classes/child-processor.js:86:11)
+>     at MessagePort.<anonymous> (./node_modules/bullmq/dist/cjs/classes/main-base.js:19:42)
+>     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:816:20)
+>     at MessagePort.<anonymous> (node:internal/per_context/messageport:23:28) {
+>   custom: <ref *1> { ref: [Circular *1] }
+> }
 > ```
 
 Apply patch and run with or without worker threads:
@@ -58,6 +60,15 @@ npm start
 ```
 
 > ```
-> Sandboxed job 500
-> Worker failed Error [AxiosError]: Request failed with status code 500
+> Sandboxed job {}
+> Worker failed Error: test
+>     at module.exports (./sandbox.js:3:17)
+>     at ChildProcessor.processor (./node_modules/bullmq/dist/cjs/classes/child-processor.js:47:40)
+>     at ./node_modules/bullmq/dist/cjs/classes/child-processor.js:70:43
+>     at ChildProcessor.start (./node_modules/bullmq/dist/cjs/classes/child-processor.js:86:11)
+>     at MessagePort.<anonymous> (./node_modules/bullmq/dist/cjs/classes/main-base.js:19:42)
+>     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:816:20)
+>     at MessagePort.<anonymous> (node:internal/per_context/messageport:23:28) {
+>   custom: {}
+> }
 > ```
